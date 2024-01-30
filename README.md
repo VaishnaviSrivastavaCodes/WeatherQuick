@@ -7,6 +7,7 @@ Architecture : Clean Architecture \
 Dependency Injection : Dagger Hilt 
 
 
-![image](https://github.com/VaishnaviSrivastavaCodes/WeatherQuick/assets/72790971/d41c5d19-9b7d-4cf5-8121-f47c496d743e)
+![Screenshot_20240131_041029](https://github.com/VaishnaviSrivastavaCodes/WeatherQuick/assets/72790971/e1206f79-f34e-454b-93d5-ed3728ac1e1f)
+
 
 
