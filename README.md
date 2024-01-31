@@ -1,7 +1,7 @@
 WeatherQuick displays the weather at your current location, and the forecast for each hour of the current day.
 
 API Used : https://open-meteo.com/ \
-UI : Jetpack Compose
+UI : Jetpack Compose \
 Network : Retrofit + GSON \
 Architecture : Clean Architecture \
 Dependency Injection : Dagger Hilt 
