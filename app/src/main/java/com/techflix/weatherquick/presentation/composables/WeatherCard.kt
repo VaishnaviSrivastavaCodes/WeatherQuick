@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -29,7 +31,8 @@ import java.time.format.DateTimeFormatter
 fun WeatherCard(
     state: WeatherState,
     backgroundColor: Color,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    cityName: String?
 ) {
     state.weatherInfo?.currentWeatherData?.let { data ->
 
@@ -46,12 +49,29 @@ fun WeatherCard(
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    "Today " +
-                            "${data.time.format(DateTimeFormatter.ofPattern("HH:mm"))}",
-                    modifier = Modifier.align(Alignment.End),
-                    color = Color.White,
-                )
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    cityName?.let { cityName ->
+                        Row() {
+                            Image(
+                                painterResource(id = R.drawable.ic_location),
+                                contentDescription = "Location Icon",
+                                modifier = Modifier.height(24.dp),
+                                colorFilter = ColorFilter.tint(Color.Red)
+                            )
+                            Text(text = cityName, color = Color.White)
+                        }
+                    }
+                    Spacer(
+                        Modifier
+                            .weight(1f))
+
+                    Text(
+                        "Today " +
+                                "${data.time.format(DateTimeFormatter.ofPattern("HH:mm"))}",
+                        color = Color.White,
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(60.dp))
                 Image(
                     painter = painterResource(id = data.weatherType.iconRes),

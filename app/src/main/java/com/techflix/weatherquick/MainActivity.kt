@@ -1,6 +1,8 @@
 package com.techflix.weatherquick
 
 import android.Manifest
+import android.content.Context
+import android.location.Geocoder
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -45,6 +47,7 @@ class MainActivity : ComponentActivity() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             )
         )
+
         setContent {
             Box {
                 Column(
@@ -52,7 +55,15 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(DarkBlue)
                 ) {
-                    WeatherCard(state = viewModel.state, backgroundColor = DeepBlue)
+                    WeatherCard(
+                        state = viewModel.state,
+                        backgroundColor = DeepBlue,
+                        cityName = getCityNameFromLatLong(
+                            this@MainActivity,
+                            viewModel.state.latitude,
+                            viewModel.state.longitude
+                        )
+                    )
                     Spacer(modifier = Modifier.height(16.dp))
                     WeatherForecast(state = viewModel.state)
                 }
@@ -76,5 +87,17 @@ class MainActivity : ComponentActivity() {
 
     }
 
+}
+
+fun getCityNameFromLatLong(context: Context, lat: Double?, long: Double?): String? {
+    if (lat == null || long == null) return null
+    val geocoder = Geocoder(context)
+    return geocoder.getFromLocation(lat, long, 2).let {
+        it?.get(0)?.let { add0 ->
+            add0.locality.toString()
+        } ?: it?.get(1)?.let { add1 ->
+            add1.locality.toString()
+        }
+    }
 }
 

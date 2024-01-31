@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
-    val repository: WeatherRepository,
-    val locationTracker: LocationTracker
+    private val repository: WeatherRepository,
+    private val locationTracker: LocationTracker
 ) : ViewModel() {
 
     var state by mutableStateOf(WeatherState())
@@ -32,7 +32,9 @@ class WeatherViewModel @Inject constructor(
                         state = state.copy(
                             weatherInfo = result.data,
                             isLoading = false,
-                            error = null
+                            error = null,
+                            latitude = location.latitude,
+                            longitude = location.longitude
                         )
                     }
 
@@ -49,6 +51,7 @@ class WeatherViewModel @Inject constructor(
                 state = state.copy(
                     isLoading = false,
                     error = "Couldn't receive location. Make sure that location permission is granted."
+                    ,
                 )
             }
 
